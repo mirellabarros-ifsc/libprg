@@ -65,9 +65,23 @@ int dequeue(Fila* fila); // OK
 int head(Fila* fila); // OK
 int tail(Fila* fila); // OK
 
-// pilha
+// Pilha
 typedef struct Pilha Pilha;
 Pilha* criarPilha();
 void push();
+
+// Lista Encadeada
+
+typedef struct no{
+    int dado;
+    struct no* proximo;
+} no_t;
+
+void adicionar_encadeada(no_t** inicio, int dado);
+no_t* buscar_encadeada(no_t* inicio, int dado);
+bool remover_encadeada(no_t** inicio, int dado);
+void destruir_encadeaca(no_t** inicio);
+void adicionar_circ_encadeada(no_t** inicio, int dado, bool ordenada);
+void adicionar_circ_dp_encadeada(no_t** inicio, int dado, bool ordenada);
 
 #endif
