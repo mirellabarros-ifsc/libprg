@@ -5,10 +5,7 @@
 #ifndef LIBPRG_LIBPRG_H
 #define LIBPRG_LIBPRG_H
 
-typedef struct {
-    double value;
-    int error;
-} result_t;
+typedef struct result_t;
 
 // Lista Linear
 typedef struct Lista Lista;
@@ -47,12 +44,6 @@ bool salvarArquivoTxt(Contatos* contatos);
 bool lerArquivoTxt(Contatos* contatos);
 bool salvarArquivoBin(Contatos* contatos);
 
-// Soma
-typedef enum { SUM, SUB } operation_t;
-result_t sub(double a, double b);
-result_t sum(double a, double b);
-result_t compute(double a, double b, operation_t op);
-
 // Fila
 typedef struct Fila Fila;
 Fila* criaFila(int capacidade); // OK
@@ -71,16 +62,11 @@ Pilha* criarPilha();
 void push();
 
 // Lista Encadeada
-
-typedef struct no{
-    int dado;
-    struct no* proximo;
-} no_t;
-
-void adicionar_encadeada(no_t** inicio, int dado);
-no_t* buscar_encadeada(no_t* inicio, int dado);
-bool remover_encadeada(no_t** inicio, int dado);
-void destruir_encadeaca(no_t** inicio);
+typedef struct no no_t;
+void adicionar_ec(no_t** inicio, int dado);
+bool remover_ec(no_t** inicio, int dado);
+no_t* buscar_ec(no_t* inicio, int dado);
+void destruir_ec(no_t** inicio);
 void adicionar_circ_encadeada(no_t** inicio, int dado, bool ordenada);
 void adicionar_circ_dp_encadeada(no_t** inicio, int dado, bool ordenada);
 
