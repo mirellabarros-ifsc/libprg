@@ -66,6 +66,7 @@ typedef struct no no_t;
 void adicionar_ec(no_t** inicio, int dado);
 bool remover_ec(no_t** inicio, int dado);
 no_t* buscar_ec(no_t* inicio, int dado);
+int* getlista_ec(no_t* inicio);
 
 void destruir_ec(no_t** inicio);
 void adicionar_circ_encadeada(no_t** inicio, int dado, bool ordenada);

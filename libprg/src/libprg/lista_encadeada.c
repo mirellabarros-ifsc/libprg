@@ -41,6 +41,13 @@ bool remover_ec(no_t** inicio, int dado) {
     return false;
 }
 
+int* getlista_ec(no_t* inicio) {
+    int tamanho = 10;
+    int* lista = malloc(sizeof(int) * tamanho);
+    if (lista) {
+
+    }
+}
 
 
 void destruir_ec(no_t** inicio);
