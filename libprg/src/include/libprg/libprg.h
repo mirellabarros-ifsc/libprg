@@ -63,10 +63,12 @@ void push();
 
 // Lista Encadeada
 typedef struct no no_t;
-void adicionar_ec(no_t** inicio, int dado);
+typedef struct lista lista_t;
+lista_t* criar_ec(bool ordenada);
+void adicionar_ec(lista_t* lista, int dado);
 bool remover_ec(no_t** inicio, int dado);
 no_t* buscar_ec(no_t* inicio, int dado);
-int* getlista_ec(no_t* inicio);
+int* getlista_ec(lista_t* lista);
 
 void destruir_ec(no_t** inicio);
 void adicionar_circ_encadeada(no_t** inicio, int dado, bool ordenada);

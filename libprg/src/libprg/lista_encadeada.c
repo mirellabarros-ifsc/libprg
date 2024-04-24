@@ -5,11 +5,30 @@ typedef struct no {
     struct no* proximo;
 } no_t;
 
-void adicionar_ec(no_t** inicio, int dado) {
+typedef struct lista {
+    int tamanho;
+    bool ordenada;
+    no_t* inicio;
+} lista_t;
+
+lista_t* criar_ec(bool ordenada) {
+    lista_t* lista_ec = malloc(sizeof(lista_t));
+    if (lista_ec) {
+        lista_ec->tamanho = 0;
+        lista_ec->ordenada = ordenada;
+        lista_ec->inicio = NULL;
+        return lista_ec;
+    } else {
+        return NULL;
+    }
+}
+
+void adicionar_ec(lista_t* lista, int dado) {
     no_t* novo = malloc(sizeof(no_t));
     novo->dado = dado;
-    novo->proximo = *inicio;
-    *inicio = novo;
+    novo->proximo = lista->inicio;
+    lista->inicio = novo;
+    lista->tamanho++;
 }
 
 no_t* buscar_ec(no_t* inicio, int dado) {
@@ -41,13 +60,20 @@ bool remover_ec(no_t** inicio, int dado) {
     return false;
 }
 
-int* getlista_ec(no_t* inicio) {
-    int tamanho = 10;
-    int* lista = malloc(sizeof(int) * tamanho);
-    if (lista) {
-
+int* getlista_ec(lista_t* lista) {
+    int i = 0;
+    int* elementos = malloc(sizeof(int) * lista->tamanho);
+    if (elementos) {
+        no_t* no = lista->inicio;
+        while (no != NULL) {
+            elementos[i] = no->dado;
+            no = no->proximo;
+            i++;
+        }
+        return elementos;
+    } else {
+        return NULL;
     }
 }
-
 
 void destruir_ec(no_t** inicio);
