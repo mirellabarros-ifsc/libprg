@@ -62,25 +62,6 @@ no_t* buscar_ec(lista_t* lista, int dado) {
     return NULL;
 }
 
-//bool remover_ec(no_t** inicio, int dado) {
-//    no_t* atual = *inicio;
-//    no_t* anterior = NULL;
-//    while (atual != NULL) {
-//        if (atual->dado == dado) {
-//            if (anterior == NULL) {
-//                *inicio = atual->proximo;
-//            } else {
-//                anterior->proximo = atual->proximo;
-//            }
-//            free(atual);
-//            return true;
-//        }
-//        anterior = atual;
-//        atual = atual->proximo;
-//    }
-//    return false;
-//}
-
 bool remover_ec(lista_t* lista, int dado) {
     no_t* atual = lista->inicio;
     no_t* anterior = NULL;
@@ -92,6 +73,7 @@ bool remover_ec(lista_t* lista, int dado) {
                 anterior->proximo = atual->proximo;
             }
             free(atual);
+            lista->tamanho--;
             return true;
         }
         anterior = atual;
