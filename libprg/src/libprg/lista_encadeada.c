@@ -23,6 +23,10 @@ lista_t* criar_ec(bool ordenada) {
     }
 }
 
+int tamanho_ec(lista_t* lista) {
+    return lista->tamanho;
+}
+
 void adicionar_ec(lista_t* lista, int dado) {
     no_t* novo = malloc(sizeof(no_t));
     novo->dado = dado;

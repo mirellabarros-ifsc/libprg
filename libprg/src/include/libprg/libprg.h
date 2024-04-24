@@ -65,6 +65,7 @@ void push();
 typedef struct no no_t;
 typedef struct lista lista_t;
 lista_t* criar_ec(bool ordenada);
+int tamanho_ec(lista_t* lista);
 void adicionar_ec(lista_t* lista, int dado);
 bool remover_ec(no_t** inicio, int dado);
 no_t* buscar_ec(no_t* inicio, int dado);
