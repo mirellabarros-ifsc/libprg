@@ -44,11 +44,28 @@ int* get_lista_ec(lista_t* lista) {
 }
 
 void adicionar_ec(lista_t* lista, int dado) {
-    no_t* novo = malloc(sizeof(no_t));
-    novo->dado = dado;
-    novo->proximo = lista->inicio;
-    lista->inicio = novo;
-    lista->tamanho++;
+    if (lista->ordenada) {
+        no_t* no = malloc(sizeof(no_t));
+        no_t* aux = malloc(sizeof(no_t));
+        no = lista->inicio;
+        aux->proximo = NULL;
+        while (no != NULL) {
+            if (no->dado < dado) {
+               aux->proximo = no->proximo;
+               no->dado = dado;
+
+            }
+
+        }
+
+    } else {
+        no_t* novo = malloc(sizeof(no_t));
+        novo->dado = dado;
+        novo->proximo = lista->inicio;
+        lista->inicio = novo;
+        lista->tamanho++;
+    }
+
 }
 
 no_t* buscar_ec(lista_t* lista, int dado) {
