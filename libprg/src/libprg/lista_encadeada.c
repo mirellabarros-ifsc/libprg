@@ -23,48 +23,11 @@ lista_t* criar_ec(bool ordenada) {
     }
 }
 
-int tamanho_ec(lista_t* lista) {
+int get_tamanho_ec(lista_t* lista) {
     return lista->tamanho;
 }
 
-void adicionar_ec(lista_t* lista, int dado) {
-    no_t* novo = malloc(sizeof(no_t));
-    novo->dado = dado;
-    novo->proximo = lista->inicio;
-    lista->inicio = novo;
-    lista->tamanho++;
-}
-
-no_t* buscar_ec(no_t* inicio, int dado) {
-    while (inicio != NULL) {
-        if (inicio->dado == dado) {
-            return inicio;
-        }
-        inicio = inicio->proximo;
-    }
-    return NULL;
-}
-
-bool remover_ec(no_t** inicio, int dado) {
-    no_t* atual = *inicio;
-    no_t* anterior = NULL;
-    while (atual != NULL) {
-        if (atual->dado == dado) {
-            if (anterior == NULL) {
-                *inicio = atual->proximo;
-            } else {
-                anterior->proximo = atual->proximo;
-            }
-            free(atual);
-            return true;
-        }
-        anterior = atual;
-        atual = atual->proximo;
-    }
-    return false;
-}
-
-int* getlista_ec(lista_t* lista) {
+int* get_lista_ec(lista_t* lista) {
     int i = 0;
     int* elementos = malloc(sizeof(int) * lista->tamanho);
     if (elementos) {
@@ -78,6 +41,63 @@ int* getlista_ec(lista_t* lista) {
     } else {
         return NULL;
     }
+}
+
+void adicionar_ec(lista_t* lista, int dado) {
+    no_t* novo = malloc(sizeof(no_t));
+    novo->dado = dado;
+    novo->proximo = lista->inicio;
+    lista->inicio = novo;
+    lista->tamanho++;
+}
+
+no_t* buscar_ec(lista_t* lista, int dado) {
+    no_t* no = lista->inicio;
+    while (no != NULL) {
+        if (no->dado == dado) {
+            return lista->inicio;
+        }
+        no = no->proximo;
+    }
+    return NULL;
+}
+
+//bool remover_ec(no_t** inicio, int dado) {
+//    no_t* atual = *inicio;
+//    no_t* anterior = NULL;
+//    while (atual != NULL) {
+//        if (atual->dado == dado) {
+//            if (anterior == NULL) {
+//                *inicio = atual->proximo;
+//            } else {
+//                anterior->proximo = atual->proximo;
+//            }
+//            free(atual);
+//            return true;
+//        }
+//        anterior = atual;
+//        atual = atual->proximo;
+//    }
+//    return false;
+//}
+
+bool remover_ec(lista_t* lista, int dado) {
+    no_t* atual = lista->inicio;
+    no_t* anterior = NULL;
+    while (atual != NULL) {
+        if (atual->dado == dado) {
+            if (anterior == NULL) {
+                lista->inicio = atual->proximo;
+            } else {
+                anterior->proximo = atual->proximo;
+            }
+            free(atual);
+            return true;
+        }
+        anterior = atual;
+        atual = atual->proximo;
+    }
+    return false;
 }
 
 void destruir_ec(no_t** inicio);

@@ -65,11 +65,11 @@ void push();
 typedef struct no no_t;
 typedef struct lista lista_t;
 lista_t* criar_ec(bool ordenada);
-int tamanho_ec(lista_t* lista);
+int get_tamanho_ec(lista_t* lista);
+int* get_lista_ec(lista_t* lista);
 void adicionar_ec(lista_t* lista, int dado);
-bool remover_ec(no_t** inicio, int dado);
-no_t* buscar_ec(no_t* inicio, int dado);
-int* getlista_ec(lista_t* lista);
+bool remover_ec(lista_t* lista, int dado);
+no_t* buscar_ec(lista_t* lista, int dado);
 
 void destruir_ec(no_t** inicio);
 void adicionar_circ_encadeada(no_t** inicio, int dado, bool ordenada);
