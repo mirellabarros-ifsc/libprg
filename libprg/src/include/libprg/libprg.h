@@ -70,8 +70,8 @@ int* get_lista_ec(lista_t* lista);
 void adicionar_ec(lista_t* lista, int dado);
 bool remover_ec(lista_t* lista, int dado);
 no_t* buscar_ec(lista_t* lista, int dado);
+void excluir_ec(lista_t* lista);
 
-void destruir_ec(no_t** inicio);
 void adicionar_circ_encadeada(no_t** inicio, int dado, bool ordenada);
 void adicionar_circ_dp_encadeada(no_t** inicio, int dado, bool ordenada);
 

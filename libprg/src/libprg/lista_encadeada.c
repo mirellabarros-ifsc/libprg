@@ -106,4 +106,14 @@ bool remover_ec(lista_t* lista, int dado) {
     return false;
 }
 
-void destruir_ec(no_t** inicio);
+void excluir_ec(lista_t* lista) {
+	no_t* atual = lista->inicio;
+	no_t* proximo;
+
+	while (atual != NULL) {
+		proximo = atual->proximo;
+		free(atual);
+		atual = proximo;
+	}
+	free(lista);
+}
