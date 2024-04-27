@@ -190,9 +190,10 @@ bool lista_enc_circ_adicionar(lista_circ_t* lista, int dado) {
 				novo->proximo = lista->inicio;
 				lista->inicio = novo;
 			} else if (atual->proximo == lista->inicio) { // O elemento a ser inserido é o último
-				atual->proximo = novo;
-				novo->proximo = lista->inicio;
 				lista->fim->proximo = novo;
+				lista->fim = novo;
+				novo->proximo = lista->inicio;
+
 			} else { // O elemento será inserido no meio
 				anterior->proximo = novo;
 				novo->proximo = atual;
