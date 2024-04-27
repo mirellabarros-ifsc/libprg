@@ -157,11 +157,11 @@ int* lista_enc_circ_get_lista(lista_circ_t* lista) {
 	int* elementos = malloc(sizeof(int) * lista->tamanho);
 	if (elementos) {
 		no_t* no = lista->inicio;
-		while (no != lista->fim) {
+		do {
 			elementos[i] = no->dado;
 			no = no->proximo;
 			i++;
-		}
+		} while (no != lista->fim);
 		return elementos;
 	} else {
 		return NULL;
