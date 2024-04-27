@@ -135,7 +135,7 @@ typedef struct lista_circ {
 	no_t *fim;
 } lista_circ_t;
 
-lista_circ_t *criar_dp_ec(bool ordenada) {
+lista_circ_t *lista_enc_circ_criar(bool ordenada) {
 	lista_circ_t *lista = malloc(sizeof(lista_circ_t));
 	if (lista) {
 		lista->ordenada = ordenada;
