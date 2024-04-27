@@ -177,7 +177,7 @@ bool lista_enc_circ_adicionar(lista_circ_t* lista, int dado) {
 			no_t* atual = lista->inicio;
 			no_t* anterior = NULL;
 
-			while (atual != lista->inicio && atual->dado < dado) {
+			while (atual != lista->fim && atual->dado < dado) {
 				anterior = atual;
 				atual = atual->proximo;
 			}
