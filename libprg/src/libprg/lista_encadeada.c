@@ -170,47 +170,55 @@ int* lista_enc_circ_get_lista(lista_circ_t* lista) {
 
 bool lista_enc_circ_adicionar(lista_circ_t* lista, int dado) {
 	no_t* novo = malloc(sizeof(no_t));
+
 	if (novo) {
+
 		novo->dado = dado;
 		novo->proximo = NULL;
+
 		if (lista->ordenada) {
-			no_t* atual = lista->inicio;
-			no_t* anterior = NULL;
-
-			while (atual != lista->fim && atual->dado < dado) {
-				anterior = atual;
-				atual = atual->proximo;
-			}
-
-			if (lista->inicio == NULL) { // A lista não possui elementos
+			if (lista->inicio == NULL) { // A lista está vazia
 				lista->inicio = novo;
 				lista->fim = novo;
 				novo->proximo = lista->inicio;
-			} else if (anterior == NULL) { // O elemento a ser inserido é o primeiro
-				novo->proximo = lista->inicio;
-				lista->inicio = novo;
-			} else if (atual->proximo == lista->inicio) { // O elemento a ser inserido é o último
-				lista->fim->proximo = novo;
-				lista->fim = novo;
-				novo->proximo = lista->inicio;
+			} else {
+				no_t* atual = lista->inicio;
+				no_t* anterior = NULL;
 
-			} else { // O elemento será inserido no meio
-				anterior->proximo = novo;
-				novo->proximo = atual;
+				while (atual != lista->fim && atual->dado < dado) {
+					anterior = atual;
+					atual = atual->proximo;
+				}
+
+				if (anterior == NULL) { // O elemento a ser inserido é o primeiro
+					novo->proximo = lista->inicio;
+					lista->inicio = novo;
+					lista->fim->proximo = novo;
+				} else if (atual->proximo == lista->inicio) { // O elemento a ser inserido é o último
+					lista->fim->proximo = novo;
+					lista->fim = novo;
+					novo->proximo = lista->inicio;
+				} else { // O elemento será inserido no meio
+					anterior->proximo = novo;
+					novo->proximo = atual;
+				}
 			}
 
 		} else {
-			if (lista->inicio == NULL) {
+			if (lista->inicio == NULL) { // A lista está vazia
 				lista->inicio = novo;
 				lista->fim = novo;
 				novo->proximo = lista->inicio;
 			} else {
 				novo->proximo = lista->inicio;
 				lista->inicio = novo;
+				lista->fim->proximo = novo; // Atualiza o ponteiro próximo do último nó
 			}
 		}
+
 		lista->tamanho++;
 		return true;
+
 	} else {
 		return false;
 	}
