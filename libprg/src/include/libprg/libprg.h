@@ -5,8 +5,6 @@
 #ifndef LIBPRG_LIBPRG_H
 #define LIBPRG_LIBPRG_H
 
-typedef struct result_t;
-
 // Lista Linear
 typedef struct Lista Lista;
 Lista* criarLista();
@@ -61,18 +59,31 @@ typedef struct Pilha Pilha;
 Pilha* criarPilha();
 void push();
 
-// Lista Encadeada
+// ===============================
+// ESTRUTURAS DE LISTAS ENCADEADAS
+// ===============================
+
+// Lista simplesmente encadeada
+
 typedef struct no no_t;
 typedef struct lista lista_t;
-lista_t* criar_ec(bool ordenada);
-int get_tamanho_ec(lista_t* lista);
-int* get_lista_ec(lista_t* lista);
-void adicionar_ec(lista_t* lista, int dado);
-bool remover_ec(lista_t* lista, int dado);
-no_t* buscar_ec(lista_t* lista, int dado);
-void excluir_ec(lista_t* lista);
+lista_t* lista_enc_criar(bool ordenada);
+int lista_enc_get_tamanho(lista_t* lista);
+int* lista_enc_get_lista(lista_t* lista);
+bool lista_enc_adicionar(lista_t* lista, int dado);
+bool lista_enc_remover(lista_t* lista, int dado);
+no_t* lista_enc_buscar(lista_t* lista, int dado);
+void lista_enc_excluir_lista(lista_t* lista);
 
-void adicionar_circ_encadeada(no_t** inicio, int dado, bool ordenada);
-void adicionar_circ_dp_encadeada(no_t** inicio, int dado, bool ordenada);
+// Lista simplesmente encadeada circular
+
+typedef struct lista_circ lista_circ_t;
+lista_circ_t* lista_enc_circ_criar(bool ordenada);
+int lista_enc_circ_get_tamanho(lista_circ_t* lista);
+int* lista_enc_circ_get_lista(lista_circ_t* lista);
+bool lista_enc_circ_adicionar(lista_circ_t* lista, int dado);
+bool lista_enc_circ_remover(lista_circ_t* lista, int dado);
+no_t* lista_enc_circ_buscar(lista_circ_t* lista, int dado);
+void lista_enc_circ_excluir_lista(lista_circ_t* lista);
 
 #endif
