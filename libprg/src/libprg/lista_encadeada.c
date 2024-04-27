@@ -161,7 +161,7 @@ int* lista_enc_circ_get_lista(lista_circ_t* lista) {
 			elementos[i] = no->dado;
 			no = no->proximo;
 			i++;
-		} while (no != lista->fim);
+		} while (no != lista->inicio);
 		return elementos;
 	} else {
 		return NULL;
