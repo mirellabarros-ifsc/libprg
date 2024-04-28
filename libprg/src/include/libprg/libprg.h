@@ -41,6 +41,7 @@ void editarPessoa(Contatos* contatos, int id, char nome[100], char telefone[14],
 bool salvarArquivoTxt(Contatos* contatos);
 bool lerArquivoTxt(Contatos* contatos);
 bool salvarArquivoBin(Contatos* contatos);
+void excluirLista(Contatos* contatos);
 
 // Fila
 typedef struct Fila Fila;
