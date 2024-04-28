@@ -169,3 +169,8 @@ bool salvarArquivoBin(Contatos* contatos) {
         return false;
     }
 }
+
+void excluirLista(Contatos* contatos) {
+    free(contatos->pessoa);
+    free(contatos);
+}

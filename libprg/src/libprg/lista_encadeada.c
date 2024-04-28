@@ -172,7 +172,6 @@ bool lista_enc_circ_adicionar(lista_circ_t* lista, int dado) {
 	no_t* novo = malloc(sizeof(no_t));
 
 	if (novo) {
-
 		novo->dado = dado;
 		novo->proximo = NULL;
 
@@ -215,15 +214,24 @@ bool lista_enc_circ_adicionar(lista_circ_t* lista, int dado) {
 				lista->fim->proximo = novo; // Atualiza o ponteiro próximo do último nó
 			}
 		}
-
 		lista->tamanho++;
 		return true;
-
 	} else {
 		return false;
 	}
 }
 
 bool lista_enc_circ_remover(lista_circ_t* lista, int dado);
-no_t* lista_enc_circ_buscar(lista_circ_t* lista, int dado);
+
+no_t* lista_enc_circ_buscar(lista_circ_t* lista, int dado) {
+	no_t* no = lista->inicio;
+	do {
+		if (no->dado == dado) {
+			return lista->inicio;
+		}
+		no = no->proximo;
+	} while (no != lista->inicio);
+	return NULL;
+}
+
 void lista_enc_circ_excluir_lista(lista_circ_t* lista);
