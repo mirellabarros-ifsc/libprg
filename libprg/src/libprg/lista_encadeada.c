@@ -225,7 +225,7 @@ bool lista_enc_circ_remover(lista_circ_t* lista, int dado) {
 	no_t* atual = lista->inicio;
 	no_t* anterior = NULL;
 
-	while (atual != lista->fim) {
+	do {
 		if (atual->dado == dado) {
 			if (anterior == NULL) { // o valor procurado é o primeiro
 				lista->inicio = atual->proximo;
@@ -243,7 +243,7 @@ bool lista_enc_circ_remover(lista_circ_t* lista, int dado) {
 		}
 		anterior = atual;
 		atual = atual->proximo;
-	}
+	} while (atual != lista->inicio);
 	return false;
 }
 
