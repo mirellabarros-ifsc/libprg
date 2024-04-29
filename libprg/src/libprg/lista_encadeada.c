@@ -1,8 +1,8 @@
 #include "libprg/libprg.h"
 
-// ======================================
-// Struct de lista simplesmente encadeada
-// ======================================
+// ==============================================================
+// Trecho do código que implementa a lista simplesmente encadeada
+// ==============================================================
 
 typedef struct no {
     int dado;
@@ -124,9 +124,9 @@ void lista_enc_excluir_lista(lista_t* lista) {
 	free(lista);
 }
 
-// ===============================================
-// Struct de lista simplesmente encadeada circular
-// ===============================================
+// =======================================================================
+// Trecho do código que implemente a lista simplesmente encadeada circular
+// =======================================================================
 
 typedef struct lista_circ {
 	int tamanho;
@@ -221,7 +221,31 @@ bool lista_enc_circ_adicionar(lista_circ_t* lista, int dado) {
 	}
 }
 
-bool lista_enc_circ_remover(lista_circ_t* lista, int dado);
+bool lista_enc_circ_remover(lista_circ_t* lista, int dado) {
+	no_t* atual = lista->inicio;
+	no_t* anterior = NULL;
+
+	while (atual != lista->fim) {
+		if (atual->dado == dado) {
+			if (anterior == NULL) { // o valor procurado é o primeiro
+				lista->inicio = atual->proximo;
+				lista->fim->proximo = atual->proximo;
+			} else if (atual->proximo == lista->inicio) { // o valor procurado é o último
+				lista->fim->proximo = anterior;
+				lista->fim = anterior;
+				anterior->proximo = lista->inicio;
+			} else { // o valor procurado está no meio
+				anterior->proximo = atual->proximo;
+			}
+			free(atual);
+			lista->tamanho--;
+			return true;
+		}
+		anterior = atual;
+		atual = atual->proximo;
+	}
+	return false;
+}
 
 no_t* lista_enc_circ_buscar(lista_circ_t* lista, int dado) {
 	no_t* no = lista->inicio;
@@ -234,4 +258,14 @@ no_t* lista_enc_circ_buscar(lista_circ_t* lista, int dado) {
 	return NULL;
 }
 
-void lista_enc_circ_excluir_lista(lista_circ_t* lista);
+void lista_enc_circ_excluir_lista(lista_circ_t* lista) {
+	no_t* atual = lista->inicio;
+	no_t* proximo;
+
+	while (atual != lista->fim) {
+		proximo = atual->proximo;
+		free(atual);
+		atual = proximo;
+	}
+	free(lista);
+}
