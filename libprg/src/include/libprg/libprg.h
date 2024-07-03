@@ -87,4 +87,8 @@ bool lista_enc_circ_remover(lista_circ_t* lista, int dado);
 no_t* lista_enc_circ_buscar(lista_circ_t* lista, int dado);
 void lista_enc_circ_excluir_lista(lista_circ_t* lista);
 
+// Ordenação BubbleSort
+
+int* bubblesort(int* vetor, int tamanho, bool decrescente);
+
 #endif

@@ -17,7 +17,8 @@ add_library(libprg
         src/libprg/fila.c
         src/libprg/lista_contato.c
         src/libprg/lista_encadeada.c
-        src/include/libprg/libprg.h)
+        src/include/libprg/libprg.h
+        src/libprg/alg_ord_troca.c)
 target_sources(libprg PUBLIC ${SOURCES})
 target_include_directories(libprg PUBLIC ${CMAKE_CURRENT_LIST_DIR}/src/include)
 
