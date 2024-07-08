@@ -99,4 +99,7 @@ void insertion(int* vetor, int tamanho);
 // Selection sort
 void selection(int* vetor, int tamanho);
 
+// Função para calcular o tempo do algoritmo
+// https://emersonmello.me/ensino/prg2/tempo/
+
 #endif
