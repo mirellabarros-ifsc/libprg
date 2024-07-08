@@ -19,7 +19,6 @@ void bubblesort(int* vetor, int tamanho, bool decrescente) {
 			}
 		}
 	}
-	return vetor;
 }
 
 void insertion(int* vetor, int tamanho) {
@@ -32,7 +31,6 @@ void insertion(int* vetor, int tamanho) {
 		}
 		vetor[j + 1] = chave;
 	}
-	return vetor;
 }
 
 void selection(int* vetor, int tamanho) {
@@ -49,5 +47,4 @@ void selection(int* vetor, int tamanho) {
 			vetor[min] = aux;
 		}
 	}
-	return vetor;
 }
