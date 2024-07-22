@@ -105,6 +105,8 @@ void selection(int* vetor, int tamanho);
 
 // Merge sort
 int* merge_sort(int* vetor, int esquerda, int direita);
+// Quick sort
+int* quick_sort(int* vetor, int inicio, int fim);
 
 // Função para calcular o tempo do algoritmo
 // https://emersonmello.me/ensino/prg2/tempo/
