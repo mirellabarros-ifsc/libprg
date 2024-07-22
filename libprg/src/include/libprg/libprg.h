@@ -89,7 +89,7 @@ void lista_enc_circ_excluir_lista(lista_circ_t* lista);
 
 
 // ===============================
-// ALGORITMOS DE ORDENAÇÃO
+// ALGORITMOS DE ORDENAÇÃO - TROCA
 // ===============================
 
 // Bubblesort
@@ -98,6 +98,13 @@ void bubblesort(int* vetor, int tamanho, bool decrescente);
 void insertion(int* vetor, int tamanho);
 // Selection sort
 void selection(int* vetor, int tamanho);
+
+// =============================================
+// ALGORITMOS DE ORDENAÇÃO - DIVISÃO E CONQUISTA
+// =============================================
+
+// Merge sort
+int* merge_sort(int* vetor, int esquerda, int direita);
 
 // Função para calcular o tempo do algoritmo
 // https://emersonmello.me/ensino/prg2/tempo/
