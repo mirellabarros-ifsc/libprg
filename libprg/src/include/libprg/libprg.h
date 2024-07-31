@@ -111,4 +111,20 @@ int* quick_sort(int* vetor, int inicio, int fim);
 // Função para calcular o tempo do algoritmo
 // https://emersonmello.me/ensino/prg2/tempo/
 
+// =============================================
+// ALGORITMOS DE ORDENAÇÃO - DIVISÃO E CONQUISTA
+// =============================================
+
+typedef struct nodo {
+	int valor;
+	struct nodo *esquerda;
+	struct nodo *direita;
+} nodo_t;
+
+nodo_t *criar_nodo(int valor);
+void destruir_nodo(nodo_t *nodo);
+nodo_t *inserir_valor(nodo_t *raiz, int valor);
+bool busca(nodo_t *raiz, int valor);
+nodo_t *remover_valor(nodo_t *raiz, int valor)
+
 #endif
