@@ -41,9 +41,9 @@ nodo_t *remover_valor(nodo_t *raiz, int valor) {
 	} else if (valor > raiz->valor) {
 		raiz->direita = remover_valor(raiz->direita, valor);
 	} else {
-
-		// IF nó folha ou nó com um filho
-		// ELSE nó com dois filhos
+		if (raiz->esquerda == NULL || raiz->direita == NULL) {
+			free(raiz);
+		}
 	}
 	return raiz;
 }
