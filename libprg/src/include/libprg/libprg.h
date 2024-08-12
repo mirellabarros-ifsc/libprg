@@ -112,7 +112,7 @@ int* quick_sort(int* vetor, int inicio, int fim);
 // https://emersonmello.me/ensino/prg2/tempo/
 
 // =============================================
-// ALGORITMOS DE ORDENAÇÃO - DIVISÃO E CONQUISTA
+// ÁRVORE
 // =============================================
 
 typedef struct nodo {
@@ -121,10 +121,11 @@ typedef struct nodo {
 	struct nodo *direita;
 } nodo_t;
 
-nodo_t *criar_nodo(int valor);
+nodo_t *criar_arvore(int valor);
 void destruir_nodo(nodo_t *nodo);
 nodo_t *inserir_valor(nodo_t *raiz, int valor);
 bool busca(nodo_t *raiz, int valor);
-nodo_t *remover_valor(nodo_t *raiz, int valor)
+nodo_t *remover_valor(nodo_t *raiz, int valor);
+void travessia_inorder(nodo_t* raiz);
 
 #endif

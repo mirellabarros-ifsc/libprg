@@ -1,6 +1,6 @@
 #include "libprg/libprg.h"
 
-nodo_t *criar_nodo(int valor) {
+nodo_t *criar_arvore(int valor) {
 	nodo_t *nodo = (nodo_t *) malloc(sizeof(nodo_t));
 	nodo->valor = valor;
 	nodo->esquerda = nodo->direita = NULL;
@@ -18,7 +18,7 @@ void destruir_nodo(nodo_t *nodo) {
 // todo nó é raiz de uma subárvore
 nodo_t *inserir_valor(nodo_t *raiz, int valor) {
 	if (raiz == NULL) {
-		return criar_nodo(valor);
+		return criar_arvore(valor);
 	} else if (valor < raiz->valor) {
 		raiz->esquerda = inserir_valor(raiz->esquerda, valor);
 	} else if (valor > raiz->valor) {
@@ -41,9 +41,30 @@ nodo_t *remover_valor(nodo_t *raiz, int valor) {
 	} else if (valor > raiz->valor) {
 		raiz->direita = remover_valor(raiz->direita, valor);
 	} else {
-		if (raiz->esquerda == NULL || raiz->direita == NULL) {
+		if (raiz->esquerda == NULL) {
+			nodo_t *tmp = raiz->direita;
 			free(raiz);
+			return tmp;
+		} else if (raiz->direita == NULL) {
+			nodo_t *tmp = raiz->esquerda;
+			free(raiz);
+			return tmp;
 		}
+
+		nodo_t *tmp = raiz->direita;
+		while (tmp->esquerda != NULL) {
+			tmp = tmp->esquerda;
+		}
+		raiz->valor = tmp->valor;
+		raiz->direita = remover_valor(raiz->direita, tmp->valor);
 	}
 	return raiz;
+}
+
+void travessia_inorder(nodo_t* raiz) {
+	if (raiz != NULL) {
+		travessia_inorder(raiz->esquerda);
+		printf("%d", raiz->valor);
+		travessia_inorder(raiz->direita);
+	}
 }
