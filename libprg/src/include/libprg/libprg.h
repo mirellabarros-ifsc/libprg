@@ -127,5 +127,7 @@ nodo_t *inserir_valor(nodo_t *raiz, int valor);
 bool busca(nodo_t *raiz, int valor);
 nodo_t *remover_valor(nodo_t *raiz, int valor);
 void travessia_inorder(nodo_t* raiz);
+void travessia_preoder(nodo_t* raiz);
+void travessia_posorder(nodo_t* raiz);
 
 #endif

@@ -68,3 +68,50 @@ void travessia_inorder(nodo_t* raiz) {
 		travessia_inorder(raiz->direita);
 	}
 }
+
+void travessia_preoder(nodo_t* raiz) {
+	if(raiz != NULL){
+		printf("%d ",raiz->valor);
+		travessia_preoder(raiz->esquerda);
+		travessia_preoder(raiz->direita);
+	}
+}
+
+void travessia_posorder(nodo_t* raiz) {
+	if(raiz != NULL){
+		travessia_posorder(raiz->esquerda);
+		travessia_posorder(raiz->direita);
+		printf("%d ",raiz->valor);
+	}
+}
+
+void width(nodo_t* raiz,int size)
+{
+	queue_t *queue;
+
+	if((queue = malloc(sizeof(nodo_t))) == NULL){
+		exit(EXIT_FAILURE);
+	}
+	if((queue->array = calloc(size,sizeof(nodo_t))) == NULL){
+		exit(EXIT_FAILURE);
+	}
+
+	for(int i = 0; i < size; i++){
+		queue->array[i] == NULL;
+	}
+
+	queue->inicio = 0;
+	queue->fim = 0;
+	queue->total = 0;
+	queue->size = size;
+
+	while(raiz != NULL){
+		printf("%d ",raiz->valor);
+		if(raiz->left != NULL){
+			enqueueTree(raiz->esquerda,queue);
+		} if(raiz->right != NULL){
+			enqueueTree(raiz->direita,queue);
+		}
+		raiz = dequeueTree(raiz,queue);
+	}
+}
