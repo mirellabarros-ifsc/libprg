@@ -85,33 +85,141 @@ void travessia_posorder(nodo_t* raiz) {
 	}
 }
 
-void width(nodo_t* raiz,int size)
-{
-	queue_t *queue;
+void largura(nodo_t* raiz,int tamanho) {
+	fila_t *fila;
 
-	if((queue = malloc(sizeof(nodo_t))) == NULL){
+	if((fila = malloc(sizeof(nodo_t))) == NULL){
 		exit(EXIT_FAILURE);
 	}
-	if((queue->array = calloc(size,sizeof(nodo_t))) == NULL){
+	if((fila->array = calloc(tamanho,sizeof(nodo_t))) == NULL){
 		exit(EXIT_FAILURE);
 	}
 
-	for(int i = 0; i < size; i++){
-		queue->array[i] == NULL;
+	for(int i = 0; i < tamanho; i++){
+		fila->array[i] == NULL;
 	}
 
-	queue->inicio = 0;
-	queue->fim = 0;
-	queue->total = 0;
-	queue->size = size;
+	fila->inicio = 0;
+	fila->fim = 0;
+	fila->total = 0;
+	fila->tamanho = tamanho;
 
 	while(raiz != NULL){
 		printf("%d ",raiz->valor);
-		if(raiz->left != NULL){
-			enqueueTree(raiz->esquerda,queue);
-		} if(raiz->right != NULL){
-			enqueueTree(raiz->direita,queue);
+		if(raiz->esquerda != NULL){
+			enfileirar(raiz->esquerda,fila);
+		} if(raiz->direita != NULL){
+			enfileirar(raiz->direita,fila);
 		}
-		raiz = dequeueTree(raiz,queue);
+		raiz = desenfileirar(raiz,fila);
 	}
+}
+
+void enfileirar(nodo_t* raiz, fila_t* fila) {
+	if(fila->tamanho == fila->total){
+		return;
+	}
+	fila->array[fila->fim] = raiz;
+	fila->fim = (fila->fim + 1) % fila->tamanho;
+	fila->total++;
+}
+
+nodo_t* desenfileirar(nodo_t* raiz, fila_t *fila) {
+	if(fila->total == 0){
+		return NULL;
+	}
+	fila->inicio = (fila->inicio + 1) % fila->tamanho;
+	fila->total--;
+	return fila->array[fila->inicio];
+}
+
+void imprimir_arvore(nodo_t* raiz) {
+	if (raiz != NULL){
+		if(raiz->esquerda != NULL){
+			printf("%d -- %d\n",raiz->valor, raiz->esquerda->valor);
+		} if (raiz->direita != NULL){
+			printf("%d -- %d\n", raiz->valor, raiz->direita->valor);
+		}
+		imprimir_arvore(raiz->esquerda);
+		imprimir_arvore(raiz->direita);
+	}
+}
+
+void imprimir_grafico(nodo_t* raiz) {
+	printf("strict graph{\n"
+		   "label=\"Árvore de busca binária\";\n"
+		   "node [shape=\"circle\", color=\"#339966\", style=\"filled\",\n"
+		   "fixedsize=true];\n");
+	imprimir_arvore(raiz);
+	printf("}\n");
+}
+
+int altura(arvore_avl_t* arvore_avl) {
+	if (arvore_avl == NULL){
+		return 0;
+	} else {
+		return arvore_avl->altura;
+	}
+}
+
+int fator_balanceamento(arvore_avl_t* arvore_avl) {
+	if(arvore_avl == NULL){
+		return 0;
+	} else{
+		return altura(arvore_avl->esquerda) - altura(arvore_avl->direita);
+	}
+}
+
+arvore_avl_t *rotacao_esquerda(arvore_avl_t* arvore_avl) {
+	arvore_avl_t *novo = arvore_avl->direita;
+	arvore_avl->direita = novo->esquerda;
+	novo->esquerda = arvore_avl;
+
+	arvore_avl->altura = max(altura(arvore_avl->esquerda), altura(arvore_avl->direita)) + 1;
+	novo->altura = max(altura(novo->esquerda), altura(novo->direita));
+
+	return novo;
+}
+
+arvore_avl_t *rotacao_direita(arvore_avl_t* arvore_avl) {
+	arvore_avl_t* novo = arvore_avl->esquerda;
+	arvore_avl->esquerda = novo->direita;
+	novo->direita = arvore_avl;
+
+	arvore_avl->altura = max(altura(arvore_avl->esquerda), altura(arvore_avl->direita)) + 1;
+	novo->altura = max(altura(novo->esquerda), altura(novo->direita));
+
+	return novo;
+}
+
+arvore_avl_t* direita_esquerda(arvore_avl_t* arvore_avl) {
+	arvore_avl->direita = rotacao_direita(arvore_avl->direita);
+
+
+	return rotacao_esquerda(arvore_avl);
+}
+
+arvore_avl_t* esquerda_direita(arvore_avl_t* arvore_avl) {
+	arvore_avl->esquerda = rotacao_esquerda(arvore_avl->esquerda);
+
+	return rotacao_direita(arvore_avl);
+}
+
+arvore_avl_t* balanceamento(arvore_avl_t* arvore_avl) {
+	int factor = fator_balanceamento(arvore_avl);
+
+	if(factor > 1){
+		if(fator_balanceamento(arvore_avl->esquerda) > 0){
+			return rotacao_esquerda(arvore_avl);
+		} else{
+			return esquerda_direita(arvore_avl);
+		}
+	} else if(factor < -1){
+		if(fator_balanceamento(arvore_avl->direita) > 0){
+			return rotacao_esquerda(arvore_avl);
+		} else{
+			return direita_esquerda(arvore_avl);
+		}
+	}
+	return arvore_avl;
 }

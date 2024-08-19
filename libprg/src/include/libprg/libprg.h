@@ -114,12 +114,28 @@ int* quick_sort(int* vetor, int inicio, int fim);
 // =============================================
 // ÁRVORE
 // =============================================
+#define max(a,b) (((a) > (b))) ? (a) : (b)
 
 typedef struct nodo {
 	int valor;
 	struct nodo *esquerda;
 	struct nodo *direita;
 } nodo_t;
+
+typedef struct arvore_avl {
+	int valor;
+	int altura;
+	struct arvore_avl* esquerda;
+	struct arvore_avl* direita;
+} arvore_avl_t;
+
+typedef struct {
+	nodo_t **array;
+	int fim;
+	int total;
+	int inicio;
+	int tamanho;
+} fila_t;
 
 nodo_t *criar_arvore(int valor);
 void destruir_nodo(nodo_t *nodo);
@@ -129,5 +145,17 @@ nodo_t *remover_valor(nodo_t *raiz, int valor);
 void travessia_inorder(nodo_t* raiz);
 void travessia_preoder(nodo_t* raiz);
 void travessia_posorder(nodo_t* raiz);
+void largura(nodo_t* raiz,int tamanho);
+void enfileirar(nodo_t* raiz, fila_t* fila);
+nodo_t* desenfileirar(nodo_t* raiz, fila_t *fila);
+void imprimir_arvore(nodo_t* raiz);
+void imprimir_grafico(nodo_t* raiz);
+int altura(arvore_avl_t* arvore_avl);
+int fator_balanceamento(arvore_avl_t* arvore_avl);
+arvore_avl_t *rotacao_esquerda(arvore_avl_t* arvore_avl);
+arvore_avl_t *rotacao_direita(arvore_avl_t* arvore_avl);
+arvore_avl_t* direita_esquerda(arvore_avl_t* arvore_avl);
+arvore_avl_t* esquerda_direita(arvore_avl_t* arvore_avl);
+arvore_avl_t* balanceamento(arvore_avl_t* arvore_avl);
 
 #endif
