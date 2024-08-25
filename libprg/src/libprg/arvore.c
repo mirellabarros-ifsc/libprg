@@ -160,7 +160,7 @@ arvore_avl_t *criar_arvore_avl(int valor) {
 	arvore_avl_t *raiz = malloc(sizeof(arvore_avl_t));
 	raiz->valor = valor;
 	raiz->esquerda = raiz->direita = NULL;
-	raiz->altura = 0;
+	raiz->altura = 1;
 	return raiz;
 }
 
@@ -194,13 +194,16 @@ int fator_balanceamento(arvore_avl_t *raiz) {
 }
 
 arvore_avl_t *rotacao_esquerda(arvore_avl_t *raiz, int *contador) {
-	printf("Rotação à esquerda realizada. Contador: %d\n", *contador);
 	(*contador)++;
+	printf("Rotação à esquerda realizada. Contador: %d\n", *contador);
 	arvore_avl_t *u = raiz->direita;
 	raiz->direita = u->esquerda;
 	u->esquerda = raiz;
-	raiz->altura = max(altura(raiz->esquerda), altura(raiz->direita)) + 1;
-	u->altura = max(altura(u->esquerda), altura(u->direita)) + 1;
+
+	// Atualizar a altura após a rotação
+	raiz->altura = 1 + max(altura(raiz->esquerda), altura(raiz->direita));
+	u->altura = 1 + max(altura(u->esquerda), altura(u->direita));
+
 	return u;
 }
 
@@ -210,8 +213,11 @@ arvore_avl_t *rotacao_direita(arvore_avl_t *raiz, int *contador) {
 	arvore_avl_t *u = raiz->esquerda;
 	raiz->esquerda = u->direita;
 	u->direita = raiz;
-	raiz->altura = max(altura(raiz->esquerda), altura(raiz->direita)) + 1;
-	u->altura = max(altura(u->esquerda), altura(u->direita)) + 1;
+
+	// Atualizar a altura após a rotação
+	raiz->altura = 1 + max(altura(raiz->esquerda), altura(raiz->direita));
+	u->altura = 1 + max(altura(u->esquerda), altura(u->direita));
+
 	return u;
 }
 
@@ -227,15 +233,22 @@ arvore_avl_t *rotacao_dupla_direita(arvore_avl_t *raiz, int *contador) {
 
 arvore_avl_t *inserir(arvore_avl_t *raiz, int valor, int *contador) {
 	if (raiz == NULL) {
-		raiz = criar_arvore_avl(valor);
-	} else if (valor < raiz->valor) {
+		return criar_arvore_avl(valor);
+	}
+
+	if (valor < raiz->valor) {
 		raiz->esquerda = inserir(raiz->esquerda, valor, contador);
 	} else if (valor > raiz->valor) {
 		raiz->direita = inserir(raiz->direita, valor, contador);
+	} else {
+		return raiz; // Não permite duplicatas
 	}
+
+	// Recalcular a altura do nó atual após a inserção
 	raiz->altura = 1 + max(altura(raiz->esquerda), altura(raiz->direita));
-	raiz = balancear(raiz, contador);
-	return raiz;
+
+	// Balancear a árvore
+	return balancear(raiz, contador);
 }
 
 arvore_avl_t *remover(arvore_avl_t *raiz, int valor, int *contador) {
