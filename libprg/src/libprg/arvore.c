@@ -124,8 +124,8 @@ void enfileirar(nodo_t* raiz, fila_t* fila) {
 	fila->total++;
 }
 
-nodo_t* desenfileirar(nodo_t* raiz, fila_t *fila) {
-	if(fila->total == 0){
+nodo_t *desenfileirar(nodo_t *raiz, fila_t *fila) {
+	if (fila->total == 0) {
 		return NULL;
 	}
 	fila->inicio = (fila->inicio + 1) % fila->tamanho;
@@ -133,11 +133,12 @@ nodo_t* desenfileirar(nodo_t* raiz, fila_t *fila) {
 	return fila->array[fila->inicio];
 }
 
-void imprimir_arvore(nodo_t* raiz) {
-	if (raiz != NULL){
-		if(raiz->esquerda != NULL){
-			printf("%d -- %d\n",raiz->valor, raiz->esquerda->valor);
-		} if (raiz->direita != NULL){
+void imprimir_arvore(nodo_t *raiz) {
+	if (raiz != NULL) {
+		if (raiz->esquerda != NULL) {
+			printf("%d -- %d\n", raiz->valor, raiz->esquerda->valor);
+		}
+		if (raiz->direita != NULL) {
 			printf("%d -- %d\n", raiz->valor, raiz->direita->valor);
 		}
 		imprimir_arvore(raiz->esquerda);
@@ -145,81 +146,137 @@ void imprimir_arvore(nodo_t* raiz) {
 	}
 }
 
-void imprimir_grafico(nodo_t* raiz) {
-	printf("strict graph{\n"
-		   "label=\"Árvore de busca binária\";\n"
-		   "node [shape=\"circle\", color=\"#339966\", style=\"filled\",\n"
-		   "fixedsize=true];\n");
+void imprimir_texto_grafo(arvore_avl_t *raiz) {
+	printf("\n");
+	printf("strict graph{\n");
+	printf("label=\"Árvore de busca binária\";\n");
+	printf("node [shape=\"oval\", color=\"#339966\", style=\"filled\", fontcolor=\"black\"\n");
+	printf("\tfixedsize=true];\n");
 	imprimir_arvore(raiz);
 	printf("}\n");
 }
 
-int altura(arvore_avl_t* arvore_avl) {
-	if (arvore_avl == NULL){
+arvore_avl_t *criar_arvore_avl(int valor) {
+	arvore_avl_t *raiz = malloc(sizeof(arvore_avl_t));
+	raiz->valor = valor;
+	raiz->esquerda = raiz->direita = NULL;
+	raiz->altura = 0;
+	return raiz;
+}
+
+void imprimir_arvore_avl_grafo(arvore_avl_t *raiz) {
+	if (raiz != NULL) {
+		if (raiz->esquerda != NULL) {
+			printf("%d -- %d\n", raiz->valor, raiz->esquerda->valor);
+		}
+		if (raiz->direita != NULL) {
+			printf("%d -- %d\n", raiz->valor, raiz->direita->valor);
+		}
+		imprimir_arvore_avl_grafo(raiz->esquerda);
+		imprimir_arvore_avl_grafo(raiz->direita);
+	}
+}
+
+int altura(arvore_avl_t *raiz) {
+	if (raiz == NULL) {
 		return 0;
 	} else {
-		return arvore_avl->altura;
+		return raiz->altura;
 	}
 }
 
-int fator_balanceamento(arvore_avl_t* arvore_avl) {
-	if(arvore_avl == NULL){
+int fator_balanceamento(arvore_avl_t *raiz) {
+	if (raiz == NULL) {
 		return 0;
-	} else{
-		return altura(arvore_avl->esquerda) - altura(arvore_avl->direita);
+	} else {
+		return altura(raiz->esquerda) - altura(raiz->direita);
 	}
 }
 
-arvore_avl_t *rotacao_esquerda(arvore_avl_t* arvore_avl) {
-	arvore_avl_t *novo = arvore_avl->direita;
-	arvore_avl->direita = novo->esquerda;
-	novo->esquerda = arvore_avl;
-
-	arvore_avl->altura = max(altura(arvore_avl->esquerda), altura(arvore_avl->direita)) + 1;
-	novo->altura = max(altura(novo->esquerda), altura(novo->direita));
-
-	return novo;
+arvore_avl_t *rotacao_esquerda(arvore_avl_t *raiz, int *contador) {
+	(*contador)++;
+	arvore_avl_t *u = raiz->direita;
+	raiz->direita = u->esquerda;
+	u->esquerda = raiz;
+	raiz->altura = max(altura(raiz->esquerda), altura(raiz->direita)) + 1;
+	u->altura = max(altura(u->esquerda), altura(u->direita)) + 1;
+	return u;
 }
 
-arvore_avl_t *rotacao_direita(arvore_avl_t* arvore_avl) {
-	arvore_avl_t* novo = arvore_avl->esquerda;
-	arvore_avl->esquerda = novo->direita;
-	novo->direita = arvore_avl;
-
-	arvore_avl->altura = max(altura(arvore_avl->esquerda), altura(arvore_avl->direita)) + 1;
-	novo->altura = max(altura(novo->esquerda), altura(novo->direita));
-
-	return novo;
+arvore_avl_t *rotacao_direita(arvore_avl_t *raiz, int *contador) {
+	(*contador)++;
+	arvore_avl_t *u = raiz->esquerda;
+	raiz->esquerda = u->direita;
+	u->direita = raiz;
+	raiz->altura = max(altura(raiz->esquerda), altura(raiz->direita)) + 1;
+	u->altura = max(altura(u->esquerda), altura(u->direita)) + 1;
+	return u;
 }
 
-arvore_avl_t* direita_esquerda(arvore_avl_t* arvore_avl) {
-	arvore_avl->direita = rotacao_direita(arvore_avl->direita);
-
-
-	return rotacao_esquerda(arvore_avl);
+arvore_avl_t *rotacao_dupla_direita(arvore_avl_t *raiz, int *contador) {
+	raiz->esquerda = rotacao_esquerda(raiz->esquerda, contador);
+	return rotacao_direita(raiz, contador);
 }
 
-arvore_avl_t* esquerda_direita(arvore_avl_t* arvore_avl) {
-	arvore_avl->esquerda = rotacao_esquerda(arvore_avl->esquerda);
-
-	return rotacao_direita(arvore_avl);
+arvore_avl_t *rotacao_dupla_esquerda(arvore_avl_t *raiz, int *contador) {
+	raiz->direita = rotacao_direita(raiz->direita, contador);
+	return rotacao_esquerda(raiz, contador);
 }
 
-arvore_avl_t* balanceamento(arvore_avl_t* arvore_avl) {
-	int factor = fator_balanceamento(arvore_avl);
-
-	if(factor > 1){
-		if(fator_balanceamento(arvore_avl->esquerda) > 0){
-			return rotacao_esquerda(arvore_avl);
-		} else{
-			return esquerda_direita(arvore_avl);
+arvore_avl_t *balancear(arvore_avl_t *raiz, int *contador) {
+	int fator = fator_balanceamento(raiz);
+	if (fator > 1) {
+		if (fator_balanceamento(raiz->esquerda) > 0) {
+			return rotacao_direita(raiz, contador);
+		} else {
+			return rotacao_dupla_direita(raiz, contador);
 		}
-	} else if(factor < -1){
-		if(fator_balanceamento(arvore_avl->direita) > 0){
-			return rotacao_esquerda(arvore_avl);
-		} else{
-			return direita_esquerda(arvore_avl);
+	} else if (fator < -1) {
+		if (fator_balanceamento(raiz->direita) < 0) {
+			return rotacao_esquerda(raiz, contador);
+		} else {
+			return rotacao_dupla_esquerda(raiz, contador);
 		}
 	}
-	return arvore_avl;
+	return raiz;
+}
+
+arvore_avl_t *inserir(arvore_avl_t *raiz, int valor, int *contador) {
+	if (raiz == NULL) {
+		raiz = criar_arvore_avl(valor);
+	} else if (valor < raiz->valor) {
+		raiz->esquerda = inserir(raiz->esquerda, valor, contador);
+	} else if (valor > raiz->valor) {
+		raiz->direita = inserir(raiz->direita, valor, contador);
+	}
+	raiz->altura = 1 + max(altura(raiz->esquerda), altura(raiz->direita));
+	raiz = balancear(raiz, contador);
+	return raiz;
+}
+
+arvore_avl_t *remover(arvore_avl_t *raiz, int valor, int *contador) {
+	if (raiz == NULL) {
+		return NULL;
+	} else if (valor < raiz->valor) {
+		raiz->esquerda = remover(raiz->esquerda, valor, contador);
+	} else if (valor > raiz->valor) {
+		raiz->direita = remover(raiz->direita, valor, contador);
+	} else {
+		// valor == v−>valor
+		if (raiz->esquerda == NULL || raiz->direita == NULL) {
+			arvore_avl_t *aux = raiz->esquerda = raiz->direita;
+			free(raiz);
+			return aux;
+		} else {
+			arvore_avl_t *aux = raiz->esquerda;
+			while (aux->direita != NULL) {
+				aux = aux->direita;
+			}
+			raiz->valor = aux->valor;
+			raiz->esquerda = remover(raiz->esquerda, aux->valor, contador);
+		}
+	}
+	raiz->altura = 1 + max(altura(raiz->esquerda), altura(raiz->direita));
+	raiz = balancear(raiz, contador);
+	return raiz;
 }

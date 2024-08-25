@@ -100,7 +100,7 @@ void insertion(int* vetor, int tamanho);
 void selection(int* vetor, int tamanho);
 
 // =============================================
-// ALGORITMOS DE ORDENAÇÃO - DIVISÃO E CONQUISTA
+// ÁRVORE
 // =============================================
 
 // Merge sort
@@ -149,13 +149,18 @@ void largura(nodo_t* raiz,int tamanho);
 void enfileirar(nodo_t* raiz, fila_t* fila);
 nodo_t* desenfileirar(nodo_t* raiz, fila_t *fila);
 void imprimir_arvore(nodo_t* raiz);
-void imprimir_grafico(nodo_t* raiz);
-int altura(arvore_avl_t* arvore_avl);
-int fator_balanceamento(arvore_avl_t* arvore_avl);
-arvore_avl_t *rotacao_esquerda(arvore_avl_t* arvore_avl);
-arvore_avl_t *rotacao_direita(arvore_avl_t* arvore_avl);
-arvore_avl_t* direita_esquerda(arvore_avl_t* arvore_avl);
-arvore_avl_t* esquerda_direita(arvore_avl_t* arvore_avl);
-arvore_avl_t* balanceamento(arvore_avl_t* arvore_avl);
+// AVl
+void imprimir_texto_grafo(arvore_avl_t *raiz);
+arvore_avl_t *criar_arvore_avl(int valor);
+void imprimir_arvore_avl_grafo(arvore_avl_t *raiz);
+int altura(arvore_avl_t *raiz);
+int fator_balanceamento(arvore_avl_t *raiz);
+arvore_avl_t *rotacao_esquerda(arvore_avl_t *raiz, int* contador);
+arvore_avl_t *rotacao_direita(arvore_avl_t *raiz, int* contador);
+arvore_avl_t *rotacao_dupla_direita(arvore_avl_t *raiz, int* contador);
+arvore_avl_t *rotacao_dupla_esquerda(arvore_avl_t *raiz, int* contador);
+arvore_avl_t *balancear(arvore_avl_t *raiz, int *contador);
+arvore_avl_t *inserir(arvore_avl_t *raiz, int valor, int *contador);
+arvore_avl_t *remover(arvore_avl_t *raiz, int valor, int *contador);
 
 #endif
