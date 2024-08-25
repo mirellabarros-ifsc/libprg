@@ -159,8 +159,8 @@ arvore_avl_t *rotacao_esquerda(arvore_avl_t *raiz, int* contador);
 arvore_avl_t *rotacao_direita(arvore_avl_t *raiz, int* contador);
 arvore_avl_t *rotacao_dupla_direita(arvore_avl_t *raiz, int* contador);
 arvore_avl_t *rotacao_dupla_esquerda(arvore_avl_t *raiz, int* contador);
-arvore_avl_t *balancear(arvore_avl_t *raiz, int *contador);
 arvore_avl_t *inserir(arvore_avl_t *raiz, int valor, int *contador);
+arvore_avl_t *balancear(arvore_avl_t *raiz, int *contador);
 arvore_avl_t *remover(arvore_avl_t *raiz, int valor, int *contador);
 
 #endif

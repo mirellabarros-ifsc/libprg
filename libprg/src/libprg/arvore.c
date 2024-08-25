@@ -194,6 +194,7 @@ int fator_balanceamento(arvore_avl_t *raiz) {
 }
 
 arvore_avl_t *rotacao_esquerda(arvore_avl_t *raiz, int *contador) {
+	printf("Rotação à esquerda realizada. Contador: %d\n", *contador);
 	(*contador)++;
 	arvore_avl_t *u = raiz->direita;
 	raiz->direita = u->esquerda;
@@ -205,6 +206,7 @@ arvore_avl_t *rotacao_esquerda(arvore_avl_t *raiz, int *contador) {
 
 arvore_avl_t *rotacao_direita(arvore_avl_t *raiz, int *contador) {
 	(*contador)++;
+	printf("Rotação à direita realizada. Contador: %d\n", *contador);
 	arvore_avl_t *u = raiz->esquerda;
 	raiz->esquerda = u->direita;
 	u->direita = raiz;
@@ -213,32 +215,14 @@ arvore_avl_t *rotacao_direita(arvore_avl_t *raiz, int *contador) {
 	return u;
 }
 
-arvore_avl_t *rotacao_dupla_direita(arvore_avl_t *raiz, int *contador) {
-	raiz->esquerda = rotacao_esquerda(raiz->esquerda, contador);
-	return rotacao_direita(raiz, contador);
-}
-
 arvore_avl_t *rotacao_dupla_esquerda(arvore_avl_t *raiz, int *contador) {
 	raiz->direita = rotacao_direita(raiz->direita, contador);
 	return rotacao_esquerda(raiz, contador);
 }
 
-arvore_avl_t *balancear(arvore_avl_t *raiz, int *contador) {
-	int fator = fator_balanceamento(raiz);
-	if (fator > 1) {
-		if (fator_balanceamento(raiz->esquerda) > 0) {
-			return rotacao_direita(raiz, contador);
-		} else {
-			return rotacao_dupla_direita(raiz, contador);
-		}
-	} else if (fator < -1) {
-		if (fator_balanceamento(raiz->direita) < 0) {
-			return rotacao_esquerda(raiz, contador);
-		} else {
-			return rotacao_dupla_esquerda(raiz, contador);
-		}
-	}
-	return raiz;
+arvore_avl_t *rotacao_dupla_direita(arvore_avl_t *raiz, int *contador) {
+	raiz->esquerda = rotacao_esquerda(raiz->esquerda, contador);
+	return rotacao_direita(raiz, contador);
 }
 
 arvore_avl_t *inserir(arvore_avl_t *raiz, int valor, int *contador) {
@@ -278,5 +262,23 @@ arvore_avl_t *remover(arvore_avl_t *raiz, int valor, int *contador) {
 	}
 	raiz->altura = 1 + max(altura(raiz->esquerda), altura(raiz->direita));
 	raiz = balancear(raiz, contador);
+	return raiz;
+}
+
+arvore_avl_t *balancear(arvore_avl_t *raiz, int *contador) {
+	int fator = fator_balanceamento(raiz);
+	if (fator > 1) {
+		if (fator_balanceamento(raiz->esquerda) > 0) {
+			return rotacao_direita(raiz, contador);
+		} else {
+			return rotacao_dupla_direita(raiz, contador);
+		}
+	} else if (fator < -1) {
+		if (fator_balanceamento(raiz->direita) < 0) {
+			return rotacao_esquerda(raiz, contador);
+		} else {
+			return rotacao_dupla_esquerda(raiz, contador);
+		}
+	}
 	return raiz;
 }
