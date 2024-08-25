@@ -197,7 +197,7 @@ int fator_balanceamento(arvore_avl_t *raiz) {
 
 arvore_avl_t *rotacao_esquerda(arvore_avl_t *raiz, int *contador) {
 	(*contador)++;
-	printf("Rotação à esquerda realizada. Contador: %d\n", *contador);
+	// printf("Rotação à esquerda realizada. Contador: %d\n", *contador);
 	arvore_avl_t *u = raiz->direita;
 	raiz->direita = u->esquerda;
 	u->esquerda = raiz;
@@ -211,7 +211,7 @@ arvore_avl_t *rotacao_esquerda(arvore_avl_t *raiz, int *contador) {
 
 arvore_avl_t *rotacao_direita(arvore_avl_t *raiz, int *contador) {
 	(*contador)++;
-	printf("Rotação à direita realizada. Contador: %d\n", *contador);
+	// printf("Rotação à direita realizada. Contador: %d\n", *contador);
 	arvore_avl_t *u = raiz->esquerda;
 	raiz->esquerda = u->direita;
 	u->direita = raiz;
