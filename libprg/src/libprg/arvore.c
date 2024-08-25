@@ -233,22 +233,17 @@ arvore_avl_t *rotacao_dupla_direita(arvore_avl_t *raiz, int *contador) {
 
 arvore_avl_t *inserir(arvore_avl_t *raiz, int valor, int *contador) {
 	if (raiz == NULL) {
-		return criar_arvore_avl(valor);
-	}
-
-	if (valor < raiz->valor) {
+		raiz = criar_arvore_avl(valor);
+	} else if (valor < raiz->valor) {
 		raiz->esquerda = inserir(raiz->esquerda, valor, contador);
 	} else if (valor > raiz->valor) {
 		raiz->direita = inserir(raiz->direita, valor, contador);
-	} else {
-		return raiz; // Não permite duplicatas
 	}
 
 	// Recalcular a altura do nó atual após a inserção
 	raiz->altura = 1 + max(altura(raiz->esquerda), altura(raiz->direita));
-
-	// Balancear a árvore
-	return balancear(raiz, contador);
+	raiz = balancear(raiz, contador);
+	return raiz;
 }
 
 arvore_avl_t *remover(arvore_avl_t *raiz, int valor, int *contador) {
@@ -259,7 +254,6 @@ arvore_avl_t *remover(arvore_avl_t *raiz, int valor, int *contador) {
 	} else if (valor > raiz->valor) {
 		raiz->direita = remover(raiz->direita, valor, contador);
 	} else {
-		// valor == v−>valor
 		if (raiz->esquerda == NULL || raiz->direita == NULL) {
 			arvore_avl_t *aux = raiz->esquerda = raiz->direita;
 			free(raiz);
@@ -279,14 +273,15 @@ arvore_avl_t *remover(arvore_avl_t *raiz, int valor, int *contador) {
 }
 
 arvore_avl_t *balancear(arvore_avl_t *raiz, int *contador) {
-	int fator = fator_balanceamento(raiz);
-	if (fator > 1) {
+	const int fator = fator_balanceamento(raiz);
+
+	if (fator > 1) { // nó desregulado tem filho desregulado à esquerda
 		if (fator_balanceamento(raiz->esquerda) > 0) {
 			return rotacao_direita(raiz, contador);
 		} else {
 			return rotacao_dupla_direita(raiz, contador);
 		}
-	} else if (fator < -1) {
+	} else if (fator < -1) { // nó desregulado tem filho desregulado à direita
 		if (fator_balanceamento(raiz->direita) < 0) {
 			return rotacao_esquerda(raiz, contador);
 		} else {
