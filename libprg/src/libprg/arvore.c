@@ -1,5 +1,7 @@
 #include "libprg/libprg.h"
 
+#define  max(a,b) (((a) > (b)) ? (a) : (b));
+
 nodo_t *criar_arvore(int valor) {
 	nodo_t *nodo = (nodo_t *) malloc(sizeof(nodo_t));
 	nodo->valor = valor;

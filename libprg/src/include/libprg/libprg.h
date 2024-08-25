@@ -114,8 +114,6 @@ int* quick_sort(int* vetor, int inicio, int fim);
 // =============================================
 // ÁRVORE
 // =============================================
-#define max(a,b) (((a) > (b))) ? (a) : (b)
-
 typedef struct nodo {
 	int valor;
 	struct nodo *esquerda;
